@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Ejemplo del flujo del Codigo de autorizacion con Spotify</title>
+    <title>Ejemplo del flujo del Codigo de autorización con Spotify</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
       #login, #loggedin {
@@ -27,94 +27,110 @@
         </div>
         <div id="oauth">
         </div>
-        <button class="btn btn-default" id="obtain-new-token">Obtenga un nuevo token usando el token de actualización </button>
+        <div id="playlist">
+        </div>
+      </div>
+      <div id="get-playlist">
+      </div>
+        <button class="btn btn-default" id="obtain-new-token">Obtenga un nuevo token usando el token de actualización</button>
       </div>
     </div>
-
     <script id="user-profile-template" type="text/x-handlebars-template">
-      <h1>Conectado como {{items.0.owner.display_name}}</h1>
+      <h1>Conectado como {{display_name}}</h1>
       <div class="media">
         <div class="pull-left">
           <img class="media-object" width="150" src="{{images.0.url}}" />
         </div>
         <div class="media-body">
           <dl class="dl-horizontal">
-            <dt>limit</dt><dd>{{limit}}</dd>
-            <dt>offset</dt><dd>{{offset}}</dd>
-            <dt>Total</dt><dd>{{total}}</dd>
-
-            <hr/>
-            <dt>Name</dt><dd>{{items.0.name}}</dd>
-            <dt>Track</dt><dd>{{items.0.tracks.total}} tracks</dd>
-            <dt>Type</dt><dd>{{items.0.type}}</dd>
-            <dt>Id</dt> <dd>{{items.0.id}}</dd>
-            <dt>Owner</dt> <dd>{{items.0.owner.display_name}}</dd>
-            <dt>PlayList URL</dt><dd><a href="{{items.0.external_urls.spotify}}">{{items.0.external_urls.spotify}}</a></dd>
-            <dt>Imagen</dt>
-            <dd class="clearfix">
-                <img src="{{items.0.images.1.url}}" height="250" width="250" alt="Descripción de la imagen">
-            </dd>
-            <hr/>
-
-            <dt>Name</dt><dd>{{items.1.name}}</dd>
-            <dt>Track</dt><dd>{{items.1.tracks.total}} tracks</dd>
-            <dt>Type</dt><dd>{{items.1.type}}</dd>
-            <dt>Id</dt> <dd>{{items.1.id}}</dd>
-            <dt>Owner</dt> <dd>{{items.1.owner.display_name}}</dd>
-            <dt>PlayList URL</dt><dd><a href="{{items.1.external_urls.spotify}}">{{items.1.external_urls.spotify}}</a></dd>
-            <dt>Imagen</dt>
-            <dd class="clearfix">
-                <img src="{{items.1.images.1.url}}" height="250" width="250" alt="Descripción de la imagen">
-            </dd>
-         
-            <hr/>
-
-            <dt>Name</dt><dd>{{items.2.name}}</dd>
-            <dt>Track</dt><dd>{{items.2.tracks.total}} tracks</dd>
-            <dt>Type</dt><dd>{{items.2.type}}</dd>
-            <dt>Id</dt> <dd>{{items.2.id}}</dd>
-            <dt>Owner</dt> <dd>{{items.2.owner.display_name}}</dd>
-            <dt>PlayList URL</dt><dd><a href="{{items.2.external_urls.spotify}}">{{items.2.external_urls.spotify}}</a></dd>
-            <dt>Imagen</dt>
-            <dd class="clearfix">
-                <img src="{{items.2.images.0.url}}" height="250" width="250" alt="Descripción de la imagen">
-            </dd>
-           
-            <hr/>
-
-            <dt>Name</dt><dd>{{items.3.name}}</dd>
-            <dt>Track</dt><dd>{{items.3.tracks.total}} tracks</dd>
-            <dt>Type</dt><dd>{{items.3.type}}</dd>
-            <dt>Id</dt> <dd>{{items.3.id}}</dd>
-            <dt>Owner</dt> <dd>{{items.3.owner.display_name}}</dd>
-            <dt>PlayList URL</dt><dd><a href="{{items.3.external_urls.spotify}}">{{items.3.external_urls.spotify}}</a></dd>
-            <dt>Imagen</dt>
-            <dd class="clearfix">
-                <img src="{{items.3.images.0.url}}" height="250" width="250" alt="Descripción de la imagen">
-            </dd>
-
-            <hr/>
-
-            <dt>Name</dt><dd>{{items.4.name}}</dd>
-            <dt>Track</dt><dd>{{items.4.tracks.total}} tracks</dd>
-            <dt>Type</dt><dd>{{items.4.type}}</dd>
-            <dt>Id</dt> <dd>{{items.4.id}}</dd>
-            <dt>Owner</dt> <dd>{{items.4.owner.display_name}}</dd>
-            <dt>PlayList URL</dt><dd><a href="{{items.4.external_urls.spotify}}">{{items.4.external_urls.spotify}}</a></dd>
-            <dt>Imagen</dt>
-            <dd class="clearfix">
-                <img src="{{items.4.images.0.url}}" height="250" width="250" alt="Descripción de la imagen">
-            </dd>
-
-            
-            
+            <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
+            <dt>Id</dt><dd>{{id}}</dd>
+            <dt>Email</dt><dd>{{email}}</dd>
+            <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+            <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
+            <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
+            <dt>Country</dt><dd>{{country}}</dd>
           </dl>
         </div>
       </div>
-      
     </script>
 
- 
+    <script id="playlist-template" type="text/x-handlebars-template">
+      <h1>Get User's Playlists</h1>
+      {{#each items}}
+      <hr/>
+      <div class="playlist-item">
+        <dt>Name</dt><dd>{{name}}</dd>
+        <dt>Track</dt><dd>{{tracks.total}} tracks</dd>
+        <dt>Type</dt><dd>{{type}}</dd>
+        <dt>Description</dt><dd>{{description}}</dd>
+        <dt>Id</dt><dd>{{id}}</dd>
+        <dt>Owner</dt><dd>{{owner.display_name}}</dd>
+        <dt>PlayList URL</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+        <dt>Snapshot_id</dt><dd>{{snapshot_id}}</dd>
+        <dt>Tracks href</dt><dd><a href="{{tracks.href}}">{{tracks.href}}</a></dd>
+        <dt>Uri</dt><dd><a href="{{uri}}">{{uri}}</a></dd>
+        <dt>Imagen</dt>
+        <dd class="clearfix">
+          <img src="{{images.0.url}}" height="250" width="250" alt="Descripción de la imagen">
+        </dd>
+      </div>
+      {{/each}}
+    </script>
+
+    <script id="get-playlist-template" type="text/x-handlebars-template">
+      <h1>Get playlist</h1>
+      <div class="media">
+      
+        <div class="media-body">
+          <dl class="dl-vertical">
+            <dt>Name</dt><dd>{{name}}</dd>
+            <dt>Description</dt><dd>{{description}}</dd>
+            <dt>Collaborative</dt><dd>{{collaborative}}</dd>
+            <dt>External url</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+            <dt>Followers</dt><dd>{{followers.total}}</dd>
+            <dt>Href</dt><dd>{{href}}</dd>
+            <dt>id</dt><dd>{{id}}</dd>
+            <dt>Imagen</dt>
+              <dd class="clearfix">
+                <img src="{{images.0.url}}" height="250" width="250" alt="Descripción de la imagen">
+              </dd>
+           
+            <dt>Owner Name</dt><dd>{{owner.display_name}}</dd>
+            <dt>Owner URI</dt><dd>{{owner.uri}}</dd>
+            <dt>Owner Type</dt><dd>{{owner.type}}</dd>
+            <dt>Owner Id</dt><dd>{{owner.id}}</dd>
+            <dt>Owner Href</dt><dd><a href="{{owner.href}}">{{owner.href}}"></a></dd>
+            <dt>Owner Followers</dt><dd>{{owner.followers}}</dd>
+            <dt>Owner External URLS</dt><dd><a href="{{owner.external_urls}}">{{owner.external_urls}}</a></dd>
+            <dt>Owner Public</dt><dd>{{public}}</dd>
+            <dt>Owner Snapshot_id</dt><dd>{{snapshot_id}}</dd>
+            <dt>Tracks Href</dt><dd><a href="{{tracks.href}}">{{tracks.href}}</a></dd>
+            <dt>Tracks limit</dt><dd>{{tracks.limit}}</dd>
+            <dt>Tracks next</dt><dd>{{tracks.next}}</dd>
+            <dt>Tracks offset</dt><dd>{{tracks.offset}}</dd>
+            <dt>Tracks Previous</dt><dd>{{tracks.previous}}</dd>
+            <dt>Tracks Total</dt><dd>{{tracks.total}}</dd>
+
+            
+            {{#each tracks.items}}
+              <hr/>
+              <div class="track-item">
+                <dt>Track Added At</dt><dd>{{added_at}}</dd>
+                <dt>Track Added By</dt><dd><a href="{{added_by.external_urls.spotify}}">{{added_by.external_urls.spotify}}</a></dd>
+                <dt>Track Preview</dt><dd><a href="{{track.preview_url}}">{{track.preview_url}}</a></dd>
+                <h2>Track Object</h2>
+                <dt>Album name</dt><dd>{{track.album.name}}</dd>
+              </div>
+            {{/each}}
+
+        
+
+           </dl></a></dd>
+          </dl>
+        </div>
+      </div>
+    </script>
 
     <script id="oauth-template" type="text/x-handlebars-template">
       <h2>oAuth info</h2>
@@ -147,7 +163,13 @@
             userProfileTemplate = Handlebars.compile(userProfileSource),
             userProfilePlaceholder = document.getElementById('user-profile');
 
-    
+        var playlistSource = document.getElementById('playlist-template').innerHTML,
+            playlistTemplate = Handlebars.compile(playlistSource),
+            playlistPlaceholder = document.getElementById('playlist');
+
+        var getplaylistSource = document.getElementById('get-playlist-template').innerHTML,
+            getplaylistTemplate = Handlebars.compile(getplaylistSource),
+            getplaylistPlaceholder = document.getElementById('get-playlist');
 
         var oauthSource = document.getElementById('oauth-template').innerHTML,
             oauthTemplate = Handlebars.compile(oauthSource),
@@ -170,23 +192,40 @@
             });
 
             $.ajax({
-                url: 'https://api.spotify.com/v1/me/playlists?limit=5&offset=0',
-                headers: {
-                  'Authorization': 'Bearer ' + access_token 
-                },
-                success: function(response) {
-                  userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+              url: 'https://api.spotify.com/v1/me',
+              headers: {
+                'Authorization': 'Bearer ' + access_token
+              },
+              success: function(profileResponse) {
+                $.ajax({
+                  url: 'https://api.spotify.com/v1/me/playlists?limit=5&offset=0',
+                  headers: {
+                    'Authorization': 'Bearer ' + access_token
+                  },
+                  success: function(playlistResponse) {
+                    $.ajax({
+                      url: 'https://api.spotify.com/v1/playlists/2oP7gkpgIYsCFkh7ldhSq2 ',
+                      headers: {
+                        'Authorization': 'Bearer ' + access_token
+                      },
+                      success: function(getplaylistResponse) {
+                              // Handle the profile and playlist responses separately
+                              userProfilePlaceholder.innerHTML = userProfileTemplate(profileResponse);
+                              playlistPlaceholder.innerHTML = playlistTemplate(playlistResponse);
+                              getplaylistPlaceholder.innerHTML = getplaylistTemplate(getplaylistResponse);
 
-                  $('#login').hide();
-                  $('#loggedin').show();
-                }
+                              $('#login').hide();
+                              $('#loggedin').show();
+                            }
+                          });
+                  }
+                });
+              }
             });
-
-        
           } else {
-              // render initial screen
-              $('#login').show();
-              $('#loggedin').hide();
+            // render initial screen
+            $('#login').show();
+            $('#loggedin').hide();
           }
 
           document.getElementById('obtain-new-token').addEventListener('click', function() {
@@ -208,4 +247,3 @@
     </script>
   </body>
 </html>
-

@@ -14,7 +14,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
 var client_id = 'ed25516fed484d339d068f829a46167f'; // Your client id
-var client_secret = 'b921525d3f3c4ea89dd1bd8e315979e0'; // Your secret
+var client_secret = '2cda235d295648bc826f579919697daf'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 /**
@@ -101,6 +101,7 @@ app.get('/callback', function(req, res) {
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
           console.log(body);
+          
         });
 
         // we can also pass the token to the browser to make requests from there
@@ -144,4 +145,5 @@ app.get('/refresh_token', function(req, res) {
 });
 
 console.log('Listening on 8888');
+
 app.listen(8888);
